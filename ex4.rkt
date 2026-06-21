@@ -98,9 +98,9 @@
 ;;Tests: > (get-value$ '((a . 3) (b . 4)) 'b (lambda(x) (* x x )) (lambda()#f)) --> 16, (get-value$ '((a . 3) (b . 4)) 'c (lambda(x) (* x x)) (lambda()#f)) --> #f
 (define get-value$
   (lambda (assoc-list key success fail)
-   @TODO
-  )
-)
+    (cond ((null? assoc-list) (fail))
+          ((equal? key (caar assoc-list)) (success (cdar assoc-list)))
+          (else (get-value$ (cdr assoc-list) key success fail)))))
 
 ;;Signature: collect-all-values(list-assoc-lists, key)
 ;;Purpose: Returns a list of all values of the first occurrence of 'key' in each of the given association lists. If no such value, returns the empty list.
