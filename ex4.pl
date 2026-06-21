@@ -56,11 +56,19 @@ swap_item(X, X).
 % X = tree(b,void,void) ; X = tree(c,void,void) ;
 % X = tree(a,tree(b,void,void),tree(c,void,void)) ; false.
 
-sub_tree(Tree, Tree).
 sub_tree(Sub, tree(_, Left, _))  :- sub_tree(Sub, Left).
 sub_tree(Sub, tree(_, _, Right)) :- sub_tree(Sub, Right).
+sub_tree(Tree, Tree).
 
 
 
-% Signature: swap_tree(Tree, InversedTree)/2
-% Purpose: InversedTree is the �mirror� representation of Tree.
+% Signature: swap_tree(+Tree, ?InversedTree)/2
+% Purpose: InversedTree is the 'mirror' representation of Tree.
+% Example:
+% ?- swap_tree(tree(4,tree(2,tree(1,void,void),tree(3,void,void)),tree(5,void,void)),T).
+% T = tree(4,tree(5,void,void),tree(2,tree(3,void,void),tree(1,void,void))) ; false.
+
+swap_tree(void, void).
+swap_tree(tree(V, L, R), tree(V, InvR, InvL)) :-
+    swap_tree(L, InvL),
+    swap_tree(R, InvR).
