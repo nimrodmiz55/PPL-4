@@ -65,9 +65,9 @@
 
 (define find-first
   (lambda (lz-lst p)
-   @TODO
-  )
-)
+    (cond ((empty-lzl? lz-lst) 'fail)
+          ((p (head lz-lst)) (head lz-lst))
+          (else (find-first (tail lz-lst) p)))))
 
 ;;Signature: sqrt2(x,init,epsilon)
 ;;Purpose: return approximation of the square root of the given number x, according to Newton method, starting from init guess with epsilon threshold.  The procedure uses sqrt-lzl and find-first procedures.
