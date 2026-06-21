@@ -49,9 +49,16 @@ swap_item(X, X).
 
 
 
-% Signature: sub_tree(Subtree, Tree)/2
+% Signature: sub_tree(?Subtree, +Tree)/2
 % Purpose: Tree contains Subtree.
+% Example:
+% ?- sub_tree(X, tree(a, tree(b,void,void), tree(c,void,void))).
+% X = tree(b,void,void) ; X = tree(c,void,void) ;
+% X = tree(a,tree(b,void,void),tree(c,void,void)) ; false.
 
+sub_tree(Tree, Tree).
+sub_tree(Sub, tree(_, Left, _))  :- sub_tree(Sub, Left).
+sub_tree(Sub, tree(_, _, Right)) :- sub_tree(Sub, Right).
 
 
 
