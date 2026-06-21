@@ -88,9 +88,9 @@
 ;;Tests: (get-value '((a . 3) (b . 4)) 'b) --> 4,(get-value '((a . 3) (b . 4)) 'c) --> 'fail
 (define get-value
   (lambda (assoc-list key)
-   @TODO
-  )
-)
+    (cond ((null? assoc-list) 'fail)
+          ((equal? key (caar assoc-list)) (cdar assoc-list))
+          (else (get-value (cdr assoc-list) key)))))
 
 ;;Signature: get-value$(assoc-list, key, success, fail)
 ;;Purpose: Find the value of 'key'. If 'key' is found, then apply the continuation 'success' on its value val. Otherwise, apply the continuation 'fail'.
