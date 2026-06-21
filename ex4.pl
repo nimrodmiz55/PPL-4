@@ -26,10 +26,23 @@ sub_list([SubHead|SubTail], [_|ListTail]) :- sub_list([SubHead|SubTail], ListTai
 
 
 
-% Signature: swap_list(List, InversedList)/2
-% Purpose: InversedList is the ‘mirror’ representation of List, i.e, each item in the list is recursively replaced with the item at the position, with refers to the beginning and the end of the list.   
+% Signature: swap_list(+List, ?InversedList)/2
+% Purpose: InversedList is the ‘mirror’ representation of List, i.e, each item in the list is
+%          recursively replaced with the item at the mirrored position. Nested lists are also reversed.
+% Example:
+% ?- swap_list([a,b,c,d,e], T).  =>  T = [e,d,c,b,a]
+% ?- swap_list([[a,b],[c,d],e], T).  =>  T = [e,[d,c],[b,a]]
 
+swap_list(List, InversedList) :- swap_list_acc(List, [], InversedList).
 
+swap_list_acc([], Acc, Acc).
+swap_list_acc([H|T], Acc, Res) :-
+    swap_item(H, SwappedH),
+    swap_list_acc(T, [SwappedH|Acc], Res).
+
+swap_item([], []) :- !.
+swap_item([H|T], Swapped) :- !, swap_list_acc([H|T], [], Swapped).
+swap_item(X, X).
 
 
 
